@@ -1,0 +1,20 @@
+<section class="card p-4 m-5 shadow">
+    <h1 class="text-center">Detalle del Usuario</h1>
+    <div class="d-flex flex-column align-items-center">
+      <!-- Imagen del usuario -->
+      <img [src]="servicio.img" [alt]="servicio.name + ' ' + servicio.lastname" class="img-fluid rounded-circle w-25 mb-4">
+      
+      <!-- Nombre completo del usuario -->
+      <h2>{{ servicio.name }} {{ servicio.lastname }}</h2>
+      
+      <!-- Correo electrónico -->
+      <p><strong>Email:</strong> {{ servicio.email }}</p>
+      
+      <!-- Botón para volver a la página principal -->
+       <div class="d-flex flex-row gap-3">
+            <a class="btn btn-primary mt-3" (click)="confirmDelete()">Eliminar</a>
+            <a class="btn btn-primary mt-3" [routerLink]="['/home']">Actualizar</a>
+            <a class="btn btn-primary mt-3" [routerLink]="['/home']">Volver a listado</a>
+        </div>
+    </div>
+  </section>
