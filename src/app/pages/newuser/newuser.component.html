@@ -1,1 +1,41 @@
-<p>newuser works!</p>
+<h2 class="text-center my-4">Nuevo Usuario</h2>
+
+<section class="container mt-3">
+  <div class="card shadow p-4">
+    <form #userForm="ngForm" (ngSubmit)="getDataForm(userForm.value)">
+      <!-- Campo para el nombre -->
+      <div class="mb-3">
+        <label for="name" class="form-label fw-bold">Nombre</label>
+        <input type="text" class="form-control" placeholder="Introduce el nombre" id="name" name="name" [(ngModel)]="user!.name" required>
+      </div>
+
+      <!-- Campo para el apellido -->
+      <div class="mb-3">
+        <label for="lastname" class="form-label fw-bold">Apellido</label>
+        <input type="text" class="form-control" placeholder="Introduce el apellido" id="lastname" name="lastname" [(ngModel)]="user!.lastname" required>
+      </div>
+
+      <!-- Campo para el email -->
+      <div class="mb-3">
+        <label for="email" class="form-label fw-bold">Email</label>
+        <input type="email" class="form-control" placeholder="Introduce el email" id="email" name="email"[(ngModel)]="user!.email" required>
+      </div>
+
+      <!-- Campo para la URL de la imagen -->
+      <div class="mb-3">
+        <label for="img" class="form-label fw-bold">Imagen</label>
+        <input type="text" class="form-control" placeholder="Introduce la URL de la imagen" id="img" name="img" [(ngModel)]="user!.img" required>
+      </div>
+
+      <!-- Botones de acción -->
+      <div class="d-flex justify-content-between mt-4">
+        @if (user?.name !== "") {
+          <button type="submit" class="btn btn-primary px-4">Actualizar</button>
+        } @else {
+          <button type="submit" class="btn btn-primary px-4">Guardar</button>
+        }
+        <a class="btn btn-secondary px-4" [routerLink]="['/home']">Cancelar</a>
+      </div>
+    </form>
+  </div>
+</section>

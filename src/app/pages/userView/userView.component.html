@@ -1,20 +1,40 @@
 <section class="card p-4 m-5 shadow">
-    <h1 class="text-center">Detalle del Usuario</h1>
-    <div class="d-flex flex-column align-items-center">
-      <!-- Imagen del usuario -->
-      <img [src]="servicio.img" [alt]="servicio.name + ' ' + servicio.lastname" class="img-fluid rounded-circle w-25 mb-4">
-      
-      <!-- Nombre completo del usuario -->
-      <h2>{{ servicio.name }} {{ servicio.lastname }}</h2>
-      
-      <!-- Correo electrónico -->
-      <p><strong>Email:</strong> {{ servicio.email }}</p>
-      
-      <!-- Botón para volver a la página principal -->
-       <div class="d-flex flex-row gap-3">
-            <a class="btn btn-primary mt-3" (click)="confirmDelete()">Eliminar</a>
-            <a class="btn btn-primary mt-3" [routerLink]="['/home']">Actualizar</a>
-            <a class="btn btn-primary mt-3" [routerLink]="['/home']">Volver a listado</a>
+  <h1 class="text-center mb-4">Detalle del Usuario</h1>
+  <div class="row align-items-center">
+    <!-- Columna de la imagen -->
+    <div class="col-12 col-md-4 text-center">
+      <div class="rounded-circle overflow-hidden mx-auto userImg">
+        <img [src]="user.img" [alt]="user.name + ' ' + user.lastname" class="img-fluid w-100 h-100">
+      </div>
+    </div>
+
+    <!-- Columna de los detalles -->
+    <div class="col-12 col-md-8">
+      <h2>{{ user.name }}</h2>
+      <h4 class="text-muted">{{ user.lastname }}</h4>
+      <p><strong>Nombre Usuario:</strong> {{ user.name }} {{ user.lastname }}</p>
+      <p><strong>Email:</strong> {{ user.email }}</p>
+
+      <!-- Botones de acción -->
+      <div class="d-flex flex-row gap-3 mt-4">
+          <!-- Botón Borrar -->
+          <button class="btn btn-light d-flex flex-column align-items-center" (click)="confirmDelete()">
+            <img src="./images/papelera.png" alt="Borrar" class="detailsIcon">
+            <small>Borrar</small>
+          </button>
+
+          <!-- Botón Actualizar -->
+          <a class="btn btn-light d-flex flex-column align-items-center" [routerLink]="['/updateUser', user.url]">
+            <img src="./images/actualizar.png" alt="Actualizar" class="detailsIcon">
+            <small>Actualizar</small>
+          </a>
+
+          <!-- Botón Volver Atrás -->
+          <a class="btn btn-light d-flex flex-column align-items-center" [routerLink]="['/home']">
+            <img src="./images/volver.png" alt="Volver al listado" class="detailsIcon">
+            <small>Volver</small>
+          </a>
         </div>
     </div>
-  </section>
+  </div>
+</section>

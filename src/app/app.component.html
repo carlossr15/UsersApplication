@@ -1,16 +1,28 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
   <div class="container-fluid">
-    <a class="navbar-brand" [routerLink]="['/home']">Logo</a>
+    <!-- Logo -->
+    <a class="navbar-brand d-flex align-items-center gap-2" [routerLink]="['/home']">
+      <img src="./images/logo.png" alt="Logo" class="logo">
+      <span class="fs-4">Gestión de Usuarios</span>
+    </a>
+
+    <!-- Botón de colapso para móviles -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+
+    <!-- Enlaces de navegación -->
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" routerLinkActive="active" [routerLink]="['/home']">Home</a>
+          <a class="nav-link active" aria-current="page" routerLinkActive="active" [routerLink]="['/home']">
+            <i class="fas fa-home me-1"></i> Home
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" [routerLink]="['/newUser']">Nuevo Usuario</a>
+          <a class="nav-link" routerLinkActive="active" [routerLink]="['/newUser']">
+            <i class="fas fa-user-plus me-1"></i> Nuevo Usuario
+          </a>
         </li>
       </ul>
     </div>

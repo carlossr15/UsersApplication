@@ -1,18 +1,48 @@
+<div class="d-flex justify-content-center gap-3 my-4">
+  <button class="btn btn-outline-primary btn-lg" (click)="sortUsersAlphabetically()">
+    <i class="fas fa-sort-alpha-down"></i> Ordenar A-Z
+  </button>
+  <button class="btn btn-outline-secondary btn-lg" (click)="sortUsersReverseAlphabetically()">
+    <i class="fas fa-sort-alpha-up"></i> Ordenar Z-A
+  </button>
+</div>
+
 <section class="card p-4 m-5 shadow">
-    <h1>Usuarios</h1>
-    <div class="row g-3">
-      @for( user of arrUsers; track user.id ){
-      <article class="col-12 col-md-6 col-lg-4">
-        <div class="bg-body-secondary p-3 d-flex flex-column align-items-center">
-            <h3>{{user.name}} {{user.lastname}}</h3>
-            <img [src]="user.img" alt="{{user.name}} {{user.lastname}}" class="img-fluid rounded-circle w-50 mb-3">
-            <div class="d-flex flex-row gap-3">
-                <a class="btn btn-primary" [routerLink]="['/home', user.url]">Ver detalle</a>
-                <a class="btn btn-primary" [routerLink]="['/home', user.url]">Actualizar</a>
-                <a class="btn btn-primary" (click)="confirmDelete(user)">Eliminar</a>
-            </div>
-          </div>
-      </article>
-      }
-    </div>
-  </section>
+  <h1 class="text-center mb-4">Usuarios</h1>
+  <div class="row g-3">
+    @for (user of arrUsers; track user.id) {
+    <article class="col-12 col-md-6 col-lg-4">
+      <div class="bg-white p-3 d-flex flex-column align-items-center rounded shadow-sm border border-2 border-primary">
+        <!-- Imagen del usuario -->
+        <div class="rounded-circle overflow-hidden mb-3 userImg">
+          <img [src]="user.img" alt="{{ user.name }} {{ user.lastname }}" class="img-fluid w-100 h-100">
+        </div>
+
+        <!-- Nombre del usuario -->
+        <h5 class="text-center mb-3">{{ user.name }} {{ user.lastname }}</h5>
+
+        <!-- Botones de acción -->
+        <div class="d-flex justify-content-center gap-3">
+          <!-- Botón Ver Detalles -->
+          <a class="btn btn-light d-flex flex-column align-items-center" [routerLink]="['/user', user.url]">
+            <img src="./images/lupa.png" alt="Ver detalles" class="detailsIcon">
+            <small>Ver detalle</small>
+          </a>
+
+          <!-- Botón Actualizar -->
+          <a class="btn btn-light d-flex flex-column align-items-center" [routerLink]="['/updateUser', user.url]">
+            <img src="./images/actualizar.png" alt="Actualizar" class="detailsIcon">
+            <small>Actualizar</small>
+          </a>
+
+          <!-- Botón Borrar -->
+          <button class="btn btn-light d-flex flex-column align-items-center" (click)="confirmDelete(user)">
+            <img src="./images/papelera.png" alt="Borrar" class="detailsIcon">
+            <small>Borrar</small>
+          </button>
+        </div>
+      </div>
+    </article>
+    }
+  </div>
+</section>

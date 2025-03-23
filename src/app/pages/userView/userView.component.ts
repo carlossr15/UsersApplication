@@ -1,8 +1,8 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { UsersService } from '../../services/users.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { IUser } from '../../interfaces/iuser.interface';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-user',
@@ -15,35 +15,28 @@ export class UserViewComponent {
   activatedRoute = inject(ActivatedRoute);
   router = inject(Router);
   usersServices = inject(UsersService);
-  servicio! : IUser;
+  user: IUser = { id: 0, name: '', lastname: '', email: '', url: '', img: '' };
 
-  ngOnInit() {
+  async ngOnInit(): Promise<void> {
+    this.activatedRoute.params.subscribe(async (params: any) => {
+      const url = params.url;
 
-    this.activatedRoute.params.subscribe((params: any) => {
-      let url = params.url
-      //con esta url llamar al servicio y preguntar si en el array de datos BBDD tenemos algo con esa ruta.
-      let response = this.usersServices.getByUrl(url)
-      if (response != undefined) {
-        //tengo lo que quiero
-        this.servicio = response;
-        console.log(this.servicio)
-      } else {
-        //redirijo a la pagina 404
-        this.router.navigate(['/error'])
+      try {
+        // Espera a que la promesa se resuelva
+        const response = this.usersServices.getByUrl(url);
+        if (response) {
+          // Si se encuentra el usuario, lo asigna
+          this.user = response;
+        } else {
+          // Si no se encuentra el usuario, redirige a la página de error
+          this.router.navigate(['/error']);
+        }
+      } catch (error) {
+        console.error('Error al obtener el usuario:', error);
+        this.router.navigate(['/error']);
       }
-
-    })
+    });
   }
-
-  // confirmDelete(): void {
-  //   const confirmed = confirm('¿Estás seguro de que deseas eliminar este usuario?');
-  //   if (confirmed) {
-  //     // Lógica para eliminar el usuario
-  //     this.usersServices.delete(this.servicio); 
-  //     alert('Usuario eliminado correctamente.');
-  //     this.router.navigate(['/home']); 
-  //   }
-  // }
 
   confirmDelete(): void {
     const swalWithBootstrapButtons = Swal.mixin({
@@ -53,6 +46,7 @@ export class UserViewComponent {
       },
       buttonsStyling: false
     });
+
     swalWithBootstrapButtons.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -61,28 +55,26 @@ export class UserViewComponent {
       confirmButtonText: "Yes, delete it!",
       cancelButtonText: "No, cancel!",
       reverseButtons: true
-    }).then((result) => {
-      if (result.isConfirmed) {        
-        this.usersServices.delete(this.servicio); 
-        this.router.navigate(['/home']);
-
-        swalWithBootstrapButtons.fire({
-          title: "Deleted!",
-          text: "Your file has been deleted.",
-          icon: "success"
-        });
-      } else if (
-        /* Read more about handling dismissals below */
-        result.dismiss === Swal.DismissReason.cancel
-      ) {
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          this.usersServices.delete(this.user.id); // Borra el usuario
+          this.router.navigate(['/home']);
+          swalWithBootstrapButtons.fire({
+            title: "Deleted!",
+            text: "Your file has been deleted.",
+            icon: "success"
+          });
+        } catch (error) {
+          console.error('Error al eliminar el usuario:', error);
+        }
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
         swalWithBootstrapButtons.fire({
           title: "Cancelled",
           text: "Your imaginary file is safe :)",
           icon: "error"
         });
       }
-    }); 
-
+    });
   }
-
 }
